@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Spotify Clone</title>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.css">
+        <link rel="stylesheet" href="styles/main.css">
+    </head>
+    <body id="app">
+
+        <div class="ui sidebar left inverted vertical menu visible">
+            <div class="ui divided items js-playlist">
+
+            </div>
+        </div>
+        <div class="pusher">
+            <!-- Site content !-->
+
+            <div class="ui two column grid">
+
+
+                <div class="column">
+                    <div class="ui fluid action input">
+                        <input type="text" placeholder="Search..." class="js-input">
+                        <button class="ui button js-search">Search</button>
+                    </div><!-- end input -->
+
+                </div><!-- column -->
+
+            </div><!-- end ui two column centered grid -->
+
+            <div class="ui basic segment js-searchresult">
+                
+            </div>
+
+        </div><!-- end pusher class-->
+
+        <script src="javascript/playlist.js"></script>
+        <script src="javascript/spotifyAPI.js"></script>
+        <script src="javascript/main.js"></script>
+    </body>
+</html>
