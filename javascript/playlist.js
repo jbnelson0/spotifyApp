@@ -1,26 +1,15 @@
 const PlaylistManager = {};
 
-// this array will store the trackIds for all the
-// chosen songs by user
+// top Store track IDs
 PlaylistManager.tracks = [];
 
-// this number will refer to the CURRENT song 
-// since our tracks variable is an array, current song
-// is really just an index of that array
+// Current Song index
 PlaylistManager.currentSong = 0;
 
-/*
-    @func addTrack
-    @param {string} track
-
-    @desc - takes a trackId and 
-    adds it to the end of the array
-    @example - here's how you would use this code:
-               PlaylistManager.addTrack('trackId');
-*/
+// add track to playlist
 PlaylistManager.addTrack = (track = reqParam()) => {
     PlaylistManager.tracks.push(track);
-}; // PlaylistManager.addTrack
+};
 
 
 PlaylistManager.removeById = (id) => {
@@ -39,8 +28,8 @@ PlaylistManager.getNextSong = () => {
     PlaylistManager.currentSong++;
     const {tracks, currentSong} = PlaylistManager;
 
-    const len = tracks.length;
-    if (currentSong === len) {
+    const length = tracks.length;
+    if (currentSong === length) {
         PlaylistManager.currentSong = 0;
     }
 

@@ -1,15 +1,9 @@
-/*******************
-    GENERAL UTILITY FUNCTIONS
-********************/
-
 function reqParam() {
     throw new Error('This is a required param!');
 }
 
-(function() { // protect the lemmings!
+(function() {
 
-    // this will just check to make sure
-    // user input is not all empty
     const validateSearch = (value) => {
         return new Promise((resolve, reject) => {
             if (value.trim() === "") {
@@ -20,18 +14,12 @@ function reqParam() {
         });
     };
 
-    // this will add a track to the search results view
+    // add tracks to search results
     const addTrackToHTML = (track) => {
         const {name, preview_url, id, album} = track;
         const imageUrl = album.images[1].url;
 
-        // ^^^^ simpler version of the below set of lines
-        // const name = track.name
-        // const preview_url = track.preview_url
-        // const id = track.id
-        // const album = track.album
-
-        // add the generate HTML contents to the search results div
+        // add results to div
         const div = document.createElement('div');
         div.classList.add('ui', 'card', 'dimmable');
         div.innerHTML = getCardMarkup(name, preview_url, id, album, imageUrl, false);;
@@ -40,29 +28,28 @@ function reqParam() {
         div.addEventListener('click',() => {
             PlaylistManager.addTrack(track);
             const currentIndex = PlaylistManager.tracks.length - 1;
-            // console.log(currentIndex);
 
             const playlistTrack = document.createElement('div');
             playlistTrack.classList.add('ui', 'card', 'trackid-' + id);
             playlistTrack.innerHTML = `
-<div class="item playlist-track trackid-${id}">
-    <a href="#" class="playlist-close js-playlist-close">
-        <i class="icon remove"></i>
-    </a>
-    <div class="ui tiny image">
-      <img src="${imageUrl}">
-    </div>
-    <div class="middle aligned content playlist-content">
-      ${name}
-    </div>
-</div>
-        <audio controls style="width: 100%;">
-            <source src="${preview_url}">
-        </audio>
+                <div class="item playlist-track trackid-${id}">
+                    <a href="#" class="playlist-close js-playlist-close">
+                        <i class="icon remove"></i>
+                    </a>
+                    <div class="ui tiny image">
+                      <img src="${imageUrl}">
+                    </div>
+                    <div class="middle aligned content playlist-content">
+                      ${name}
+                    </div>
+                </div>
+                        <audio controls style="width: 100%;">
+                            <source src="${preview_url}">
+                        </audio>
             `
             playlist.appendChild(playlistTrack)
 
-            // get the AUDIO tag
+            // AUDIO
             const audio = playlistTrack.querySelector('audio');
 
             audio.addEventListener('play', () => {
@@ -80,7 +67,7 @@ function reqParam() {
             })
 
 
-            // get the CLOSE button
+            // CLOSE
            const closeBtn = playlistTrack.querySelector('.js-playlist-close');
            closeBtn.addEventListener('click', () => {
                 if (PlaylistManager.currentSong === currentIndex) {
@@ -95,7 +82,6 @@ function reqParam() {
                 playlist.removeChild(playlistTrack);
            })
         })
-        // console.log(html)
     }
 
     const button = document.querySelector('.js-search');
@@ -129,24 +115,19 @@ function reqParam() {
 
         validateSearch(value)
             .then((query) => {
-                console.log('about to search for: ', query);
-
                 input.value = '';
                 input.setAttribute('disabled', 'disabled');
                 button.setAttribute('disabled', 'disabled');
-
 
                 return SpotifyAPI.search(query);
 
             })
             .then((data) => {
-                console.log(data)
-                // bring back the input fields
                 input.removeAttribute('disabled');
                 button.removeAttribute('disabled');
-                // clear search results
+                // clear results
                 results.innerHTML = "";
-                // append new results
+                // add new results
                 const tracks = data.tracks.items;
                 for(const track of tracks) {
                     addTrackToHTML(track);
@@ -159,21 +140,9 @@ function reqParam() {
     }
 
 
-
-    /***
-
-        PROGRAM STARTS HERE
-
-    ***/
-
     button.addEventListener('click', (e) => runSearchQuery());
-    // ^^^^ shortcuts
     input.addEventListener('keydown', (e) => {
         const {keyCode, which} = e;
-        // ^^^^ equivalent to: const keyCode = e.keyCode
-        //                     const which = e.which
-        // this is called object destructuring #es6
-
         if (keyCode === 13 || which === 13) {
            runSearchQuery();
         }
