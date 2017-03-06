@@ -22,10 +22,11 @@ function reqParam() {
         // add results to div
         const div = document.createElement('div');
         div.classList.add('ui', 'card', 'dimmable');
-        div.innerHTML = getCardMarkup(name, preview_url, id, album, imageUrl, false);;
+        div.innerHTML = getCardMarkup(name, preview_url, id, album, imageUrl, false);
         results.appendChild(div);
+        const addBtn = div.querySelector('.js-add-button')
 
-        div.addEventListener('click',() => {
+        addBtn.addEventListener('click',() => {
             PlaylistManager.addTrack(track);
             const currentIndex = PlaylistManager.tracks.length - 1;
 
@@ -57,7 +58,6 @@ function reqParam() {
             });
 
             audio.addEventListener('ended', () => {
-                console.log('done!')
                 const nextTrackId = PlaylistManager.getNextSong();
 
                 setTimeout(() => {
@@ -81,6 +81,7 @@ function reqParam() {
 
                 playlist.removeChild(playlistTrack);
            })
+
         })
     }
 
@@ -92,10 +93,13 @@ function reqParam() {
     const getCardMarkup = (name, preview_url, id, album, imageUrl, isDimmed) => {
         let html = `
             <div class="image">
+                    <a href="#" class="add-btn js-add-button">
+                        <i class="icon add circle icon"></i>
+                    </a>
                 <img src="${imageUrl}">
             </div>
             <div class="content">
-                <a class="header">${name}</a>
+                <div class="header">${name}</div>
                 <div class="meta">${album.name}</div>
                 <div class="description">
                     <audio controls class="${id}" style="width: 100%;">
