@@ -92,21 +92,21 @@ function reqParam() {
 
     const getCardMarkup = (name, preview_url, id, album, imageUrl, isDimmed) => {
         let html = `
-            <div class="image">
-                    <a href="#" class="add-btn js-add-button">
-                        <i class="icon add circle icon"></i>
-                    </a>
-                <img src="${imageUrl}">
-            </div>
-            <div class="content">
-                <div class="header">${name}</div>
-                <div class="meta">${album.name}</div>
-                <div class="description">
-                    <audio controls class="${id}" style="width: 100%;">
-                        <source src="${preview_url}">
-                    </audio>
+                <div class="image">
+                    <img src="${imageUrl}">
                 </div>
-            </div>
+                <div class="content">
+                    <div class="header">${name}</div>
+                    <div class="meta">${album.name}</div>
+                    <div class="description">
+                        <audio controls class="${id}" style="width: 100%;">
+                            <source src="${preview_url}">
+                        </audio>
+                    </div>
+                    <div>
+                        <i class="icon add circle icon add-btn js-add-button">Add to Playlist</i>
+                    </div>
+                </div>
         `;
         if (isDimmed) {
             html += `<div class="ui dimmer transition visible active" style="display: block !important;"></div>`;
